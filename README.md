@@ -1,7 +1,7 @@
 # A3_Epoch_PersistenceAddon
 
 #Current Developers
-Nightmare - Developer - http://n8m4re.de
+Nightmare - http://n8m4re.de
 
 
 #License
