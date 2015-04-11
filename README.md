@@ -50,6 +50,8 @@ PersistenceExpires = 1500; // 3600 expiration date in seconds 1day=86400, 2days=
 PersistenceLimit = 5000; // max limit to store
 ```
 
+This addon contains bit of code lines from the Epoch server.pbo. (like the magazine/ammo count )
+So also Credits to the Epochmod-Team.
 
 # Author
 Nightmare - http://n8m4re.de
@@ -59,3 +61,4 @@ Nightmare - http://n8m4re.de
 All the code and information provided here is provided under an Attribution Non-Commercial ShareAlike 4.0 Commons License.
 
 http://creativecommons.org/licenses/by-nc-sa/4.0/
+
