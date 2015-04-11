@@ -34,7 +34,8 @@ waitUntil{(isPlayer player) && (alive player) && !isNil "EPOCH_loadingScreenDone
 
 ```
 
-5. add into "@epochhive/epochconfig.hpp"
+5. 
+6. add into "@epochhive/epochconfig.hpp"
 
 
 ```
