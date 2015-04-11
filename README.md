@@ -18,7 +18,7 @@ if (isDedicated) exitWith {};
 
 // compile the script on mission load
 // https://community.bistudio.com/wiki/compileFinal
-sdropClient=compileFinal preprocessFileLineNumbers "N8M4RE_Persistence_Client.sqf";
+N8M4RE_Persistence_Client=compileFinal preprocessFileLineNumbers "N8M4RE_Persistence_Client.sqf";
 
 // wait client is ready 
 // https://community.bistudio.com/wiki/waitUntil
