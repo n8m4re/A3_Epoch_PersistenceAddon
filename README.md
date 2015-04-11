@@ -52,9 +52,8 @@ PersistenceLimit = 5000; // max limit to store
 
 
 
-
-This addon contains bit of code lines from the Epoch server.pbo. (like the magazine/ammo count )
-So also Credits to the Epochmod-Team.
+ - This addon contains bit of code lines from the Epoch server.pbo. (like the magazine/ammo count )
+ - So also Credits to the Epochmod-Team.
 
 
 
