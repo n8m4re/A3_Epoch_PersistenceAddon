@@ -26,19 +26,23 @@ waitUntil{(isPlayer player) && (alive player) && !isNil "EPOCH_loadingScreenDone
 // https://community.bistudio.com/wiki/spawn
 [] spawn N8M4RE_Persistence_Client;
 ```
-4.  add into "publicvariable.txt"
+4. add into "publicvariable.txt"
+
 
 ```
 !="N8M4RE_(PERSISTENCE_PUT|PERSISTENCE_TAKE)"
+
 ```
 
-5.  add into "@epochhive/epochconfig.hpp"
+5. add into "@epochhive/epochconfig.hpp"
+
 
 ```
 PersistenceTablePrefix = "PERSIST"; // change will create a new table in db ( prefix_mapname )
-PersistenceExpires = 1500; // 3600 expiration date in seconds 1day=86400, 2days=172800, 4days=345600, 8days=691200 , .......
+PersistenceExpires = 1500; // 3600 expiration date in seconds 1day=86400, 2days=172800, 4days=345600, 8days=691200
 PersistenceLimit = 5000; // max limit to store
 ```
+
 
 # Author
 Nightmare - http://n8m4re.de
