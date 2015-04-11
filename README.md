@@ -1,10 +1,14 @@
-# Install
+# Install Server
 
-1.  add  "a3_n8m4re_persistence.bpo"  to  "@epochhive/addons"
+ADD  "a3_n8m4re_persistence.bpo"  TO  "@epochhive/addons"
 
-2.  add "N8M4RE_Persistence_Client.sqf" to "mpmissions/epoch.mapname", if you have there a *.pbo instead of a folder,     please google for "how to extract .pbo", pbo is an archive like "zip" you need a tool for that.
 
-3.  open the "init.sqf" inside of the "mpmissions/epoch.mapname" folder, if not exist then create an new file with an     editor like "notepad++" and name it to "init.sqf"
+# Install Client Mission
+
+ADD  "N8M4RE_Persistence_Client.sqf"  TO  "mpmissions/epoch.mapname", 
+if you have there a *.pbo instead of a folder, please google for "how to extract .pbo", pbo is an archive like "zip" you need a tool for that.
+
+open the "init.sqf" inside of the "mpmissions/epoch.mapname" folder, if not exist then create an new file with an     editor like "notepad++" and name it to "init.sqf"
 
 example for the "init.sqf"
 ```
@@ -26,17 +30,19 @@ waitUntil{(isPlayer player) && (alive player) && !isNil "EPOCH_loadingScreenDone
 // https://community.bistudio.com/wiki/spawn
 [] spawn N8M4RE_Persistence_Client;
 ```
-4. add into "publicvariable.txt"
 
+
+# Battleye
+
+ADD TO "publicvariable.txt"
 
 ```
 !="N8M4RE_(PERSISTENCE_PUT|PERSISTENCE_TAKE)"
-
 ```
 
-5. 
-6. add into "@epochhive/epochconfig.hpp"
+# Epoch Server Config
 
+ADD TO "@epochhive/epochconfig.hpp"
 
 ```
 PersistenceTablePrefix = "PERSIST"; // change will create a new table in db ( prefix_mapname )
