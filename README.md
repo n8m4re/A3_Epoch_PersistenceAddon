@@ -46,7 +46,7 @@ ADD TO "@epochhive/epochconfig.hpp"
 
 ```
 PersistenceTablePrefix = "PERSIST"; // change will create a new table in db ( prefix_mapname )
-PersistenceExpires = 1500; // 3600 expiration date in seconds 1day=86400, 2days=172800, 4days=345600, 8days=691200
+PersistenceExpires = 172800; // expiration date in seconds 1day=86400, 2days=172800, 4days=345600, 8days=691200
 PersistenceLimit = 5000; // max limit to store
 ```
 
