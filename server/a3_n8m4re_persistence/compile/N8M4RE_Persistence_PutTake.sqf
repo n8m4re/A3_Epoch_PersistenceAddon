@@ -30,7 +30,7 @@ if ( ((typeOf _con) == "GroundWeaponHolder")) then {
 		
 		} else {
 			_store = [_conPos,_conCargo,_conEveryCargo];
-			hint format["%1",_conEveryCargo];	
+			// hint format["%1",_conEveryCargo];	
 			[_tbl,_key,_expire,_store] call EPOCH_server_hiveSETEX;
 			_ply setVariable ["PERSIST_PLY",[N8M4RE_PersistenceIndex,_con,_key]];
 		};
