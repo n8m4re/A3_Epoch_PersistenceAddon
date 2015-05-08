@@ -16,7 +16,7 @@ for "_i" from 1 to N8M4RE_PersistenceLimit do {
 			_hld setdir (random 360);
 			_hld setVariable["BIS_enableRandomization",false];
 			_hld setVariable["PERSIST_ID",N8M4RE_PersistenceIndex,true];
-
+			_hld setVariable["LAST_CHECK",1000000000000];
 			if(surfaceIsWater _pos)then{
 			_hld setposASL _pos;
 			} else {
