@@ -1,7 +1,18 @@
+# CHANGELOG
+
+```
+v0.1.5
+
+    config variable names changed
+    removed "map name" from tablename
+    decrease of load time
+    prevent cleanup of groundholders
+    disabled not needed hint message in sqf
+```
+
 # Install Server
 
 ADD  "a3_n8m4re_persistence.bpo"  TO  "@epochhive/addons"
-
 
 # Install Client Mission
 
@@ -46,10 +57,9 @@ ADD TO "@epochhive/epochconfig.hpp"
 
 ```
 PersistenceTablePrefix = "PERSIST"; // change will create a new table in db ( prefix_mapname )
-PersistenceExpires = 172800; // expiration date in seconds 1day=86400, 2days=172800, 4days=345600, 8days=691200
-PersistenceLimit = 5000; // max limit to store
+PersistenceHolderExpires = 172800; // expiration date in seconds 1day=86400, 2days=172800, 4days=345600, 8days=691200
+PersistenceHolderLimit = 5000; // max limit to store
 ```
-
 
 
  - This addon contains some bit of code lines from the Epoch server.pbo. (like the magazine/ammo count )
