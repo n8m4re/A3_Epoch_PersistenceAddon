@@ -14,8 +14,6 @@ if ( ((typeOf _con) == "GroundWeaponHolder")) then {
 		if ( isNil "_conId" ) then {
 			N8M4RE_PersistenceHolderIndex = N8M4RE_PersistenceHolderIndex + 1;	
 			_con setVariable["PERSIST_HOLDER_ID",N8M4RE_PersistenceHolderIndex,true];
-		} else { 
-			N8M4RE_PersistenceHolderIndex = _conId; 
 		};			
 		
 		_tbl = format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS"];
