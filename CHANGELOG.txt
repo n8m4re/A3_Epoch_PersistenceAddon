@@ -1,3 +1,6 @@
+v0.1.6-fix-2
+- an "any" table was created when adding items to clothing/vest/backpack  
+
 v0.1.6-fix
 - duplicate holder index
 

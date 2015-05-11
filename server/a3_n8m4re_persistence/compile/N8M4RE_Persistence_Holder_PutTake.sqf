@@ -11,8 +11,10 @@ _holder = _this select 1;
 _holderPos = getPosATL _holder;
 _holderID = _holder getVariable "PERSIST_HOLDER_ID";	
 _expire = N8M4RE_PersistenceHolderExpires;
+_tbl = format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS"];
 
 //hint format["%1 - find=%2",(typeOf _holder),(str(_holder) find "dummyweapon.p3d")];
+
 if ( ((typeOf _holder) == "GroundWeaponHolder")) then {
 		
 	
@@ -24,9 +26,8 @@ if ( ((typeOf _holder) == "GroundWeaponHolder")) then {
 			_holderID = N8M4RE_PersistenceHolderIndexCount;
 		};			
 		
-		_tbl = format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS"];
-		_key = format["%1:%2",(call EPOCH_fn_InstanceID),_holderID];
 		
+		_key = format["%1:%2",(call EPOCH_fn_InstanceID),_holderID];
 		_holderCargo = _holder call N8M4RE_Persistence_GetCargo;
 		_holderEveryCargo = _holder call N8M4RE_Persistence_GetEveryContainerCargo;
 		_holderEveryCargo = [];
