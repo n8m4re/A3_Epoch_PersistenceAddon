@@ -1,13 +1,15 @@
 private ["_index","_key","_res","_arr","_hld","_car","_pos","_diag","_tbl"];
 _diag = diag_tickTime;
 _index = [format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"],(call EPOCH_fn_InstanceID)] call EPOCH_server_hiveGET;
+
 N8M4RE_PersistenceHolderIndex = [];	
+N8M4RE_PersistenceHolderIndexCount = 0;
+
 if ((_index select 0) == 1 && typeName(_index select 1) == "ARRAY") then {
 	if !((_index select 1) isEqualTo []) then {
 		_tbl = format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS"];
 		_index = _index select 1;
 		{
-				N8M4RE_PersistenceHolderIndex pushback _x;
 				_key = format["%1:%2", call EPOCH_fn_InstanceID,_x];
 				_res = [_tbl,_key] call EPOCH_server_hiveGET;  //EPOCH_server_hiveGETTTL _ttl = _res select 2;	
 					
@@ -20,6 +22,10 @@ if ((_index select 0) == 1 && typeName(_index select 1) == "ARRAY") then {
 						_car = _arr select 1;
 					 
 						if !((_car isEqualTo [[],[[],[]],[[],[]],[[],[]]]) || (_pos isEqualTo [])) then {	
+								
+							N8M4RE_PersistenceHolderIndex pushback _x;
+							N8M4RE_PersistenceHolderIndexCount = N8M4RE_PersistenceHolderIndexCount + 1;
+							
 							_hld = createVehicle ["GroundWeaponHolder",_pos,[],0,"CAN_COLLIDE"];
 							_hld setdir (random 360);
 							_hld setVariable["BIS_enableRandomization",false];
@@ -36,15 +42,16 @@ if ((_index select 0) == 1 && typeName(_index select 1) == "ARRAY") then {
 							[_hld,(_car select 3)] call N8M4RE_Persistence_AddBackpackCargo;
 							_hld enableSimulationGlobal true;
 						};
+							
 					} else {
-						N8M4RE_PersistenceHolderIndex deleteAt ( N8M4RE_PersistenceHolderIndex find _x );
-						[format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"],format["%1",(call EPOCH_fn_InstanceID)],N8M4RE_PersistenceHolderIndex] call EPOCH_server_hiveSET;
+						_index deleteAt ( _index find _x );
+						[format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"],format["%1",(call EPOCH_fn_InstanceID)],_index] call EPOCH_server_hiveSET;
 					};
 				}; 
 			
 		} foreach _index;
-	};	
+	};
 };
 diag_log format["[N8M4RE PERSISTENCE]: HOLDER SPAWN TIME: %1",diag_tickTime-_diag];
-diag_log format["[N8M4RE PERSISTENCE]: HOLDER SPAWNED: %1",(count N8M4RE_PersistenceHolderIndex)];
+diag_log format["[N8M4RE PERSISTENCE]: HOLDER SPAWNED: %1",N8M4RE_PersistenceHolderIndexCount];
 true

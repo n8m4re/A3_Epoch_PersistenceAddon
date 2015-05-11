@@ -1,6 +1,9 @@
 # CHANGELOG
 
 ```
+v0.1.6-fix
+- duplicate holder index
+
 v0.1.6
 - holder load/spawn and indexing reworked
 

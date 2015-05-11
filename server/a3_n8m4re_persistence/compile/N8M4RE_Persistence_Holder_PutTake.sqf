@@ -1,9 +1,8 @@
-private ["_index","_indexCount","_ply","_plyVar","_holder","_movItem","_holderPos","_holderCargo","_holderEveryCargo","_holderID","_store"];
+private ["_ply","_plyVar","_holder","_movItem","_holderPos","_holderCargo","_holderEveryCargo","_holderID","_store"];
 
-_index = N8M4RE_PersistenceHolderIndex;
-_indexCount = count _index;
+if(N8M4RE_PersistenceHolderIndexCount >= N8M4RE_PersistenceHolderLimit)exitWith{true};
 
-if(_indexCount >= N8M4RE_PersistenceHolderLimit)exitWith{true};
+N8M4RE_PersistenceHolderIndex sort true;
 
 _ply = _this select 0;
 _plyVar = _ply getVariable "PERSIST_HOLDER_PLY";	
@@ -15,12 +14,14 @@ _expire = N8M4RE_PersistenceHolderExpires;
 
 //hint format["%1 - find=%2",(typeOf _holder),(str(_holder) find "dummyweapon.p3d")];
 if ( ((typeOf _holder) == "GroundWeaponHolder")) then {
+		
 	
 		if ( isNil "_holderID" ) then {
-			_holderID = _indexCount + 1;
-			_index pushback _holderID;			
-			_holder setVariable["PERSIST_HOLDER_ID",_holderID,true];
-			[format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"],format["%1",(call EPOCH_fn_InstanceID)],_index] call EPOCH_server_hiveSET;
+			N8M4RE_PersistenceHolderIndexCount = N8M4RE_PersistenceHolderIndexCount + 1;
+			N8M4RE_PersistenceHolderIndex pushback N8M4RE_PersistenceHolderIndexCount;					
+			_holder setVariable["PERSIST_HOLDER_ID",N8M4RE_PersistenceHolderIndexCount,true];
+			[format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"],format["%1",(call EPOCH_fn_InstanceID)],N8M4RE_PersistenceHolderIndex] call EPOCH_server_hiveSET;
+			_holderID = N8M4RE_PersistenceHolderIndexCount;
 		};			
 		
 		_tbl = format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS"];
@@ -32,16 +33,19 @@ if ( ((typeOf _holder) == "GroundWeaponHolder")) then {
 		//diag_log format["%1",_holderCargo]; 
 			
 		if ( _holderCargo isEqualTo [[],[[],[]],[[],[]],[[],[]]] ) then {
-			_holder setVariable ["LAST_CHECK",nil];
+		
+			_holder setVariable ["LAST_CHECK",nil];	
 			_ply setVariable ["PERSIST_HOLDER_PLY",nil];
 			deleteVehicle _holder;
-			_index deleteAt ( _index find _holderID );
-			[format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"],format["%1",(call EPOCH_fn_InstanceID)],_index] call EPOCH_server_hiveSET;
+			N8M4RE_PersistenceHolderIndex deleteAt ( N8M4RE_PersistenceHolderIndex find _holderID );
+			[format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"],format["%1",(call EPOCH_fn_InstanceID)],N8M4RE_PersistenceHolderIndex] call EPOCH_server_hiveSET;
+			[_tbl,_key] call EPOCH_server_hiveDEL;
+			
+			if ((count N8M4RE_PersistenceHolderIndex) == 0) then {N8M4RE_PersistenceHolderIndexCount = 0;};
 		} else {
 			_holder setVariable ["LAST_CHECK",1000000000000];
 			_store = [_holderPos,_holderCargo,_holderEveryCargo];
 			// hint format["%1",_holderEveryCargo];	
-			
 			[_tbl,_key,_expire,_store] call EPOCH_server_hiveSETEX;
 			_ply setVariable ["PERSIST_HOLDER_PLY",[_holderID,_holder,_key]];
 		};
@@ -59,4 +63,6 @@ if ( ((typeOf _holder) == "GroundWeaponHolder")) then {
 			};
 		};
 };
+
+// hint format["%1",N8M4RE_PersistenceHolderIndex];	
 true
