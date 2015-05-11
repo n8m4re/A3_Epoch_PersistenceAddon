@@ -1,57 +1,60 @@
-private ["_ply","_plyVar","_con","_movItem","_conPos","_conCargo","_conEveryCargo","_conId","_store"];
-if(N8M4RE_PersistenceHolderIndex >= N8M4RE_PersistenceHolderLimit)exitWith{true};
+private ["_index","_indexCount","_ply","_plyVar","_holder","_movItem","_holderPos","_holderCargo","_holderEveryCargo","_holderID","_store"];
+
+_index = N8M4RE_PersistenceHolderIndex;
+_indexCount = count _index;
+
+if(_indexCount >= N8M4RE_PersistenceHolderLimit)exitWith{true};
+
 _ply = _this select 0;
 _plyVar = _ply getVariable "PERSIST_HOLDER_PLY";	
-_con = _this select 1;
-_movItem = _this select 2;
-_conPos = getPosATL _con;
-_conId = _con getVariable "PERSIST_HOLDER_ID";	
+_holder = _this select 1;
+//_movItem = _this select 2;
+_holderPos = getPosATL _holder;
+_holderID = _holder getVariable "PERSIST_HOLDER_ID";	
 _expire = N8M4RE_PersistenceHolderExpires;
 
-//hint format["%1 - find=%2",(typeOf _con),(str(_con) find "dummyweapon.p3d")];
-if ( ((typeOf _con) == "GroundWeaponHolder")) then {
-			
-		if ( isNil "_conId" ) then {
-			N8M4RE_PersistenceHolderIndex = N8M4RE_PersistenceHolderIndex + 1;	
-			_con setVariable["PERSIST_HOLDER_ID",N8M4RE_PersistenceHolderIndex,true];
+//hint format["%1 - find=%2",(typeOf _holder),(str(_holder) find "dummyweapon.p3d")];
+if ( ((typeOf _holder) == "GroundWeaponHolder")) then {
+	
+		if ( isNil "_holderID" ) then {
+			_holderID = _indexCount + 1;
+			_index pushback _holderID;			
+			_holder setVariable["PERSIST_HOLDER_ID",_holderID,true];
+			[format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"],format["%1",(call EPOCH_fn_InstanceID)],_index] call EPOCH_server_hiveSET;
 		};			
 		
 		_tbl = format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS"];
-		_key = format["%1:%2",(call EPOCH_fn_InstanceID),N8M4RE_PersistenceHolderIndex];
+		_key = format["%1:%2",(call EPOCH_fn_InstanceID),_holderID];
 		
-		_conCargo = _con call N8M4RE_Persistence_GetCargo;
-		_conEveryCargo = _con call N8M4RE_Persistence_GetEveryContainerCargo;
-		_conEveryCargo = [];
-		//diag_log format["%1",_conCargo]; 
+		_holderCargo = _holder call N8M4RE_Persistence_GetCargo;
+		_holderEveryCargo = _holder call N8M4RE_Persistence_GetEveryContainerCargo;
+		_holderEveryCargo = [];
+		//diag_log format["%1",_holderCargo]; 
 			
-		if ( _conCargo isEqualTo [[],[[],[]],[[],[]],[[],[]]] ) then {
-			[_tbl,_key] call EPOCH_server_hiveDEL;
-			N8M4RE_PersistenceHolderIndex = N8M4RE_PersistenceHolderIndex - 1;
-			_con setVariable ["LAST_CHECK",nil];
+		if ( _holderCargo isEqualTo [[],[[],[]],[[],[]],[[],[]]] ) then {
+			_holder setVariable ["LAST_CHECK",nil];
 			_ply setVariable ["PERSIST_HOLDER_PLY",nil];
-			deleteVehicle _con;
+			deleteVehicle _holder;
+			_index deleteAt ( _index find _holderID );
+			[format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"],format["%1",(call EPOCH_fn_InstanceID)],_index] call EPOCH_server_hiveSET;
 		} else {
-			_con setVariable ["LAST_CHECK",1000000000000];
-			_store = [_conPos,_conCargo,_conEveryCargo];
-			// hint format["%1",_conEveryCargo];	
+			_holder setVariable ["LAST_CHECK",1000000000000];
+			_store = [_holderPos,_holderCargo,_holderEveryCargo];
+			// hint format["%1",_holderEveryCargo];	
 			
 			[_tbl,_key,_expire,_store] call EPOCH_server_hiveSETEX;
-			_ply setVariable ["PERSIST_HOLDER_PLY",[N8M4RE_PersistenceHolderIndex,_con,_key]];
+			_ply setVariable ["PERSIST_HOLDER_PLY",[_holderID,_holder,_key]];
 		};
 		
-		_tbl = format["%1_%2",N8M4RE_PersistenceTablePrefix,"HOLDERS_INDEX"];
-		_key = format["%1",(call EPOCH_fn_InstanceID)];
-		[_tbl,_key,[N8M4RE_PersistenceHolderIndex]] call EPOCH_server_hiveSET;	
-			
 } else {
 		
 		if !(isNil "_plyVar") then {
 			if ( (_plyVar select 0) == (_plyVar select 1) getVariable "PERSIST_HOLDER_ID" ) then {
-				_conCargo = (_plyVar select 1) call N8M4RE_Persistence_GetCargo;
-				_conEveryCargo = (_plyVar select 1) call N8M4RE_Persistence_GetEveryContainerCargo;
-				_conEveryCargo = [];
-				_conPos = getPosATL( _plyVar select 1);
-				_store = [_conPos,_conCargo,_conEveryCargo];
+				_holderCargo = (_plyVar select 1) call N8M4RE_Persistence_GetCargo;
+				_holderEveryCargo = (_plyVar select 1) call N8M4RE_Persistence_GetEveryContainerCargo;
+				_holderEveryCargo = [];
+				_holderPos = getPosATL( _plyVar select 1);
+				_store = [_holderPos,_holderCargo,_holderEveryCargo];
 				[_tbl,(_plyVar select 2),_expire,_store] call EPOCH_server_hiveSETEX;
 			};
 		};

@@ -9,9 +9,6 @@ _C = getNumber (_epochConfig >> "PersistenceHolderLimit");
 _D = getNumber (_epochConfig >> "PersistenceMines");
 _E = getNumber (_epochConfig >> "PersistenceMinesLimit");
 
-
-missionNamespace setVariable["N8M4RE_PersistenceHolderIndex",0];
-
 if (isNil "_A") then {	
 	missionNamespace setVariable["N8M4RE_PersistenceTablePrefix",getText(_persistenceConfig >> "PersistenceTablePrefix")];
 } else {

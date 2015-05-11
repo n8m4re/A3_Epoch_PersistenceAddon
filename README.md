@@ -1,6 +1,12 @@
 # CHANGELOG
 
 ```
+v0.1.6
+- holder load/spawn and indexing reworked
+
+v0.1.5-fix
+- HolderIndex fixed
+
 v0.1.5
 
    - config variable names changed
