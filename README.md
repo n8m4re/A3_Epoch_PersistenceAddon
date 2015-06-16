@@ -1,6 +1,12 @@
 # CHANGELOG
 
 ```
+v0.1.7
+- [NEW] storing of server daytime (StaticDateTime only): PersistenceDayTime = true;
+- [NEW] holder setting -> enable/disable expiring of holders: PersistenceHolderCanExpire = true;
+- [NEW] holder setting -> enable/disable storing of groundholders: PersistenceHolder = true;  
+- [MISC] code change
+
 v0.1.6-fix-2
 - an "any" table was created when adding items to clothing/vest/backpack  
 
@@ -68,9 +74,14 @@ ADD TO "publicvariable.txt"
 ADD TO "@epochhive/epochconfig.hpp"
 
 ```
-PersistenceTablePrefix = "PERSIST"; // change will create a new table in db
-PersistenceHolderExpires = 172800;	// expiration date in seconds 1day=86400, 2days=172800, 4days=345600, 8days=691200
-PersistenceHolderLimit = 5000;		// max. groundholder limit to store
+PersistenceTablePrefix = "PERSIST"; 	// change will create a new table in db
+
+PersistenceHolder = true; 				// enable/disable storing of groundholder items
+PersistenceHolderCanExpire = true; 		// enable/disable expiring of holders
+PersistenceHolderExpires = "172800"; 	// 1day=86400, 2days=172800, 4days=345600, 8days=691200 
+PersistenceHolderLimit = 1500; 			// max groundholder can stored (a groundholder can hold more than one item)
+
+PersistenceDayTime = true;				// enable/disable storing of server daytime (StaticDateTime only)
 ```
 
 
