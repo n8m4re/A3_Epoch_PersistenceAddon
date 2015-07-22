@@ -1,6 +1,10 @@
 # CHANGELOG
 
 ```
+v0.1.7-fix-1
+- [FIXED] storing of server daytime
+
+
 v0.1.7
 - [NEW] storing of server daytime (StaticDateTime only): PersistenceDayTime = true;
 - [NEW] holder setting -> enable/disable expiring of holders: PersistenceHolderCanExpire = true;
